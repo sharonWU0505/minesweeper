@@ -1,0 +1,49 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "default-case": "error",
+    "eqeqeq": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-empty-function": "warn",
+    "no-extra-bind": "warn",
+    "max-depth": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 100
+      }
+    ],
+    "no-multiple-empty-lines": "warn",
+    "no-trailing-spaces": [
+      "warn",
+      {
+        "ignoreComments": true,
+        "skipBlankLines": true
+      }
+    ],
+    "react/no-access-state-in-setstate": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
