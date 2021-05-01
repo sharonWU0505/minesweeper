@@ -1,28 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Button } from "react95";
-
-const StyledButton = styled(Button)`
-  width: 34px;
-  height: 36px;
-`;
+import { StyledButton } from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 
 function Cell({ value, isBomb, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
-  // TODO: display with icons
-
   const displayValue = () => {
-    return isRevealed ? (isFlagged ? "F" : value) : "";
+    return isFlagged ? <FontAwesomeIcon icon={faFlag} color={"red"} /> : isRevealed ? value : "";
   };
 
   const displayAnswer = () => {
-    return isBomb ? "B" : value || "";
+    return isBomb ? <FontAwesomeIcon icon={faBomb} color={"#000000"} /> : value || "";
   };
 
-  const isActive = isRevealed || gameEnded;
-
   return (
-    <StyledButton onClick={onClick} onContextMenu={onContextMenu} active={isActive}>
+    <StyledButton
+      onClick={onClick}
+      onContextMenu={onContextMenu}
+      active={isRevealed || gameEnded}
+      value={value}>
       {gameEnded ? displayAnswer() : displayValue()}
     </StyledButton>
   );
