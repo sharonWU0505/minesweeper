@@ -4,6 +4,10 @@ const DEFAULT_LEVEL = {
   mines: 10,
 };
 
+/**
+ * @param {String} level - level of game
+ * @returns {Object} An object of level details
+ */
 function getGameLevel(level = "easy") {
   switch (level) {
     case "easy":

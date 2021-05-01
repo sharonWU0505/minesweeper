@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Row, Cell } from "../../components";
+import { Row, Cell, ActionBar } from "../../components";
+import { StyledGameInfo } from "./style";
 import { getGameLevel, createGame, initGame, revealCells } from "../../utils";
 import config from "../../config";
-import { Button } from "react95";
 
 const LEVEL = getGameLevel(config.level);
 
@@ -69,6 +69,10 @@ function Game() {
     setBoard(createGame({ rows: LEVEL.rows, cols: LEVEL.cols }));
   };
 
+  const handleSolve = () => {
+    setEnded(true);
+  };
+
   const getFlagsCount = () => {
     let count = 0;
 
@@ -84,20 +88,25 @@ function Game() {
   return (
     <main>
       <div>
-        <div>
+        <ActionBar
+          buttons={[
+            { text: "Restart", onClick: handleRestart },
+            { text: "Solve", onClick: handleSolve, disabled: !started },
+          ]}
+        />
+        <StyledGameInfo>
           <h2>{ended !== null ? (ended ? "You win!" : "You lose QQ") : "Keep playing!"}</h2>
-        </div>
-        <div>Mines: {LEVEL.mines}</div>
-        <div>Flags: {getFlagsCount()}</div>
-        <Button onClick={handleRestart}>Restart</Button>
+          <div>Mines: {LEVEL.mines}</div>
+          <div>Flags: {getFlagsCount()}</div>
+        </StyledGameInfo>
       </div>
 
       <div>
-        {board.map((row, index_r) => (
-          <Row key={`row_${index_r}`}>
-            {row.map((cell, index_c) => (
+        {board.map((row, idxRol) => (
+          <Row key={`row_${idxRol}`}>
+            {row.map((cell, idxCol) => (
               <Cell
-                key={`cell_${index_c}`}
+                key={`cell_${idxCol}`}
                 {...cell}
                 gameEnded={ended !== null}
                 onClick={event => {

@@ -9,7 +9,7 @@ function revealCells({ board, click } = {}) {
     return [board, false];
   }
 
-  // deep copy the board for revising
+  // deep-copy the board for revising
   let newBoard = JSON.parse(JSON.stringify(board));
   let gameResult = null;
 

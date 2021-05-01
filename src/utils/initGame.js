@@ -1,6 +1,6 @@
 import { DEFAULT_LEVEL, revealCells } from "./index";
 
-function createMines(mines, maxIndex, firstClickIndex) {
+function _createMines(mines, maxIndex, firstClickIndex) {
   let indices = new Set();
 
   while (indices.size < mines) {
@@ -14,8 +14,8 @@ function createMines(mines, maxIndex, firstClickIndex) {
 
 /**
  * @param {Array} board - a game board
- * @param {Number} mines - number of mines
  * @param {Array} firstClick - [x, y] of the first click
+ * @param {Number} mines - number of mines
  * @returns {Array} [A rows * cols size game board, game result]
  */
 function initGame({ board, firstClick = [], mines = DEFAULT_LEVEL.mines } = {}) {
@@ -25,12 +25,12 @@ function initGame({ board, firstClick = [], mines = DEFAULT_LEVEL.mines } = {}) 
   let initBoard = JSON.parse(JSON.stringify(board));
 
   // get randomly-set mines
-  const minesIndices = createMines(mines, rows * cols, firstClick[0] * 9 + firstClick[1]);
+  const minesIndices = _createMines(mines, rows * cols, firstClick[0] * 9 + firstClick[1]);
   minesIndices.forEach(mineIndex => {
     const rowIndex = parseInt(mineIndex / rows);
     const colIndex = mineIndex % rows;
 
-    // update mines cells
+    // set mines cells
     initBoard[rowIndex][colIndex].isMine = true;
 
     // update adjacent cells value
