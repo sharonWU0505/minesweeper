@@ -23,7 +23,12 @@ function Game() {
         {board.map((row, index_r) => (
           <Row key={`row_${index_r}`}>
             {row.map((cell, index_c) => (
-              <Cell key={`cell_${index_c}`} {...cell}></Cell>
+              <Cell
+                key={`cell_${index_c}`}
+                {...cell}
+                onClick={() => {
+                  handleClickCell(cell.x, cell.y);
+                }}></Cell>
             ))}
           </Row>
         ))}
