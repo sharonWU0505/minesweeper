@@ -1,4 +1,5 @@
 import React from "react";
+import "./assets/scss/main.scss";
 
 function App() {
   return <div>Hello World!</div>;
