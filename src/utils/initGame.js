@@ -1,9 +1,9 @@
-import { revealCells } from "./index";
+import { DEFAULT_LEVEL, revealCells } from "./index";
 
-function generateBombs(bombs, maxIndex, firstClickIndex) {
+function createMines(mines, maxIndex, firstClickIndex) {
   let indices = new Set();
 
-  while (indices.size < bombs) {
+  while (indices.size < mines) {
     const randomIndex = Math.floor(Math.random() * maxIndex);
     // The first click should not be a bomb
     if (randomIndex !== firstClickIndex) indices.add(randomIndex);
@@ -14,24 +14,24 @@ function generateBombs(bombs, maxIndex, firstClickIndex) {
 
 /**
  * @param {Array} board - a game board
- * @param {Number} bombs - number of bombs
+ * @param {Number} mines - number of mines
  * @param {Array} firstClick - [x, y] of the first click
  * @returns {Array} [A rows * cols size game board, game result]
  */
-function initGame({ board, firstClick = [], bombs = 10 } = {}) {
+function initGame({ board, firstClick = [], mines = DEFAULT_LEVEL.mines } = {}) {
   const rows = board.length;
   const cols = board[0].length;
 
   let initBoard = JSON.parse(JSON.stringify(board));
 
-  // get randomly-set bombs
-  const bombsIndices = generateBombs(bombs, rows * cols, firstClick[0] * 9 + firstClick[1]);
-  bombsIndices.forEach(bombIndex => {
-    const rowIndex = parseInt(bombIndex / rows);
-    const colIndex = bombIndex % rows;
+  // get randomly-set mines
+  const minesIndices = createMines(mines, rows * cols, firstClick[0] * 9 + firstClick[1]);
+  minesIndices.forEach(mineIndex => {
+    const rowIndex = parseInt(mineIndex / rows);
+    const colIndex = mineIndex % rows;
 
-    // update bombs cells
-    initBoard[rowIndex][colIndex].isBomb = true;
+    // update mines cells
+    initBoard[rowIndex][colIndex].isMine = true;
 
     // update adjacent cells value
     for (let i = -1; i <= 1; i++) {

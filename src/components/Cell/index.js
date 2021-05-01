@@ -4,13 +4,13 @@ import { StyledButton } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 
-function Cell({ value, isBomb, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
+function Cell({ value, isMine, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
   const displayValue = () => {
     return isRevealed ? isFlagged ? <FontAwesomeIcon icon={faFlag} color={"red"} /> : value : "";
   };
 
   const displayAnswer = () => {
-    return isBomb ? <FontAwesomeIcon icon={faBomb} color={"#000000"} /> : value || "";
+    return isMine ? <FontAwesomeIcon icon={faBomb} color={"#000000"} /> : value || "";
   };
 
   return (
@@ -26,7 +26,7 @@ function Cell({ value, isBomb, isRevealed, isFlagged, onClick, onContextMenu, ga
 
 Cell.propTypes = {
   value: PropTypes.number,
-  isBomb: PropTypes.bool,
+  isMine: PropTypes.bool,
   isRevealed: PropTypes.bool,
   isFlagged: PropTypes.bool,
   onClick: PropTypes.func,

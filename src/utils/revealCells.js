@@ -4,7 +4,7 @@
  * @returns {Array} [an updated board after revealing, game result]
  */
 function revealCells({ board, click } = {}) {
-  if (board[click[0]][click[1]].isBomb) {
+  if (board[click[0]][click[1]].isMine) {
     // game over
     return [board, false];
   }
