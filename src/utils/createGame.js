@@ -12,7 +12,7 @@ const CELL = {
  * @param {Number} cols - number of columns
  * @returns {Array} A rows * cols size game board
  */
-function createGame(rows = 9, cols = 9) {
+function createGame({ rows = 9, cols = 9 } = {}) {
   return new Array(rows).fill(0).map((_, x) =>
     new Array(cols).fill(0).map((_, y) => ({
       ...CELL,

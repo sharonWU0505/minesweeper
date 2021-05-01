@@ -16,15 +16,14 @@ function generateBombs(bombs, maxIndex, firstClickIndex) {
  * @param {Array} board - a game board
  * @param {Number} bombs - number of bombs
  * @param {Array} firstClick - [x, y] of the first click
- * @returns {Array} A rows * cols size game board
+ * @returns {Array} [A rows * cols size game board, game result]
  */
-function initGame(board, bombs = 10, firstClick = []) {
+function initGame({ board, firstClick = [], bombs = 10 } = {}) {
   const rows = board.length;
   const cols = board[0].length;
 
   // get randomly-set bombs
   const bombsIndices = generateBombs(bombs, rows * cols, firstClick[0] * 9 + firstClick[1]);
-
   bombsIndices.forEach(bombIndex => {
     const rowIndex = parseInt(bombIndex / rows);
     const colIndex = bombIndex % rows;
@@ -46,8 +45,8 @@ function initGame(board, bombs = 10, firstClick = []) {
     }
   });
 
-  // update cell's data after first-click
-  return revealCells(board, firstClick);
+  // update cell status after first-click
+  return revealCells({ board, click: firstClick });
 }
 
 export default initGame;
