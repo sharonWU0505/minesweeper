@@ -6,7 +6,7 @@ import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 
 function Cell({ value, isBomb, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
   const displayValue = () => {
-    return isFlagged ? <FontAwesomeIcon icon={faFlag} color={"red"} /> : isRevealed ? value : "";
+    return isRevealed ? isFlagged ? <FontAwesomeIcon icon={faFlag} color={"red"} /> : value : "";
   };
 
   const displayAnswer = () => {

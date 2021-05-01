@@ -17,16 +17,11 @@ function revealCells({ board, click } = {}) {
     if (newBoard[x] && newBoard[x][y] && !newBoard[x][y].isRevealed) {
       newBoard[x][y].isRevealed = true;
 
+      // if the cell has no adjacent mine, keep traversing
       if (newBoard[x][y].value === 0) {
         for (let i = -1; i <= 1; i++) {
           for (let j = -1; j <= 1; j++) {
-            if (
-              !(i === 0 && j === 0) &&
-              newBoard[x + i] &&
-              newBoard[x + i][y + j] &&
-              newBoard[x + i][y + j].value === 0
-            ) {
-              // if the cell has no adjacent mine, keep traversing
+            if (!(i === 0 && j === 0) && newBoard[x + i] && newBoard[x + i][y + j]) {
               reveal(x + i, y + j);
             }
           }

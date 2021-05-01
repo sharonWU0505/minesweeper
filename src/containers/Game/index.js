@@ -3,17 +3,14 @@ import { Row, Cell } from "../../components";
 import { createGame, initGame, revealCells } from "../../utils";
 
 function Game() {
-  // gameEnded: null for not ended, true for succeed, false for failed
-  const [gameEnded, setGameEnded] = useState(null);
-
-  const [gameStarted, setGameStarted] = useState(false);
+  const [ended, setEnded] = useState(null); // null for not ended; true for succeeded; false for failed
+  const [started, setStarted] = useState(false);
   const [board, setBoard] = useState(createGame());
 
   const handleLeftClick = (event, x, y) => {
     if (event.nativeEvent.which === 1) {
-      if (!gameStarted) {
-        setGameStarted(true);
-
+      if (!started) {
+        setStarted(true);
         setBoard(prevBoard => {
           const [initBoard, _] = initGame({ board: prevBoard, firstClick: [x, y] });
           return initBoard;
@@ -21,7 +18,7 @@ function Game() {
       } else {
         setBoard(prevBoard => {
           const [newBoard, gameResult] = revealCells({ board: prevBoard, click: [x, y] });
-          if (gameResult !== null) setGameEnded(gameResult);
+          if (gameResult !== null) setEnded(gameResult);
           return newBoard;
         });
       }
@@ -31,13 +28,14 @@ function Game() {
   const handleRightClick = (event, x, y) => {
     event.preventDefault();
 
-    if (!gameStarted) {
+    if (!started) {
       alert("Left click any cell to start the game first!");
     } else {
       setBoard(prevBoard => {
-        prevBoard[x][y].isFlagged = true;
-        prevBoard[x][y].isRevealed = true;
-        return prevBoard;
+        let newBoard = JSON.parse(JSON.stringify(prevBoard));
+        newBoard[x][y].isFlagged = !prevBoard[x][y].isFlagged;
+        newBoard[x][y].isRevealed = !prevBoard[x][y].isRevealed;
+        return newBoard;
       });
       // TODO: update number of mines left
       // TODO: detect if wins
@@ -46,7 +44,7 @@ function Game() {
 
   return (
     <main>
-      <h2>{gameEnded !== null ? (gameEnded ? "You win!" : "Oops, you lose QQ") : "Go playing"}</h2>
+      <h2>{ended !== null ? (ended ? "You win!" : "Oops, you lose QQ") : "Go playing"}</h2>
       <div>
         {board.map((row, index_r) => (
           <Row key={`row_${index_r}`}>
@@ -54,7 +52,7 @@ function Game() {
               <Cell
                 key={`cell_${index_c}`}
                 {...cell}
-                gameEnded={gameEnded !== null}
+                ended={ended !== null}
                 onClick={event => {
                   handleLeftClick(event, cell.x, cell.y);
                 }}
