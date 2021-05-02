@@ -9,6 +9,11 @@ The game has the following rules:
 - [x] It will clear the map and place numbers on the grid.
 - [x] The numbers reflect the number of mines touching a cell.
 
+| Ready to Start | Playing | Win!! | Lose QQ |
+| --- | --- | --- | --- |
+| ![image](https://user-images.githubusercontent.com/19202399/116819761-0615a480-aba4-11eb-9eac-088f5946f337.png) | ![image](https://user-images.githubusercontent.com/19202399/116819786-2ba2ae00-aba4-11eb-8a32-be5aeba9cfb0.png) | ![image](https://user-images.githubusercontent.com/19202399/116819874-bbe0f300-aba4-11eb-9259-dad26de80b72.png) | ![image](https://user-images.githubusercontent.com/19202399/116819832-758b9400-aba4-11eb-9963-d70fe564a549.png) |
+
+
 ## Set Up at Local
 
 1. Make sure that `node` (`>= v.14.15.4`) and `npm` (`>= v6.14.10`) are installed
