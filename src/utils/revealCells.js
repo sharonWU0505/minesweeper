@@ -21,6 +21,7 @@ function revealCells({ cells = [], targetCell = [], level = DEFAULT_LEVEL } = {}
     const cellIndex = getCellIndexByXAndY({ x, y, rows });
     if (updatedCells[cellIndex] && !updatedCells[cellIndex].isRevealed) {
       updatedCells[cellIndex].isRevealed = true;
+      updatedCells[cellIndex].isFlagged = false;
 
       // if the cell has no adjacent mine, keep traversing
       if (updatedCells[cellIndex].value === 0) {
