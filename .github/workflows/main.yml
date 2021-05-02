@@ -9,6 +9,8 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v1
+
+      - name: Install env
         run: npm install
 
       - name: Test
