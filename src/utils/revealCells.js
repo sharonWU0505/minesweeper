@@ -1,27 +1,39 @@
+import { getCellIndexByXAndY, DEFAULT_LEVEL } from "../utils";
+
 /**
- * @param {Array} board - the board of games
- * @param {Array} click - [x, y] of the click
- * @returns {Array} [an updated board after revealing, game result]
+ * @param {Array} cells - an array of cells representing a game
+ * @param {Array} targetCell - [x, y] of the clicked cell
+ * @param {Object} level - an object of the game level
+ * @returns {Array} [updated cells after revealing, game result]
  */
-function revealCells({ board, click } = {}) {
-  if (board[click[0]][click[1]].isMine) {
+function revealCells({ cells = [], targetCell = [], level = DEFAULT_LEVEL } = {}) {
+  const { rows, cols } = level;
+
+  if (cells[getCellIndexByXAndY({ x: targetCell[0], y: targetCell[1], rows })].isMine) {
     // game over
-    return [board, false];
+    return [cells, false];
   }
 
-  // deep-copy the board for revising
-  let newBoard = JSON.parse(JSON.stringify(board));
+  let updatedCells = cells.map(cell => ({ ...cell }));
   let gameResult = null;
 
   const reveal = (x, y) => {
-    if (newBoard[x] && newBoard[x][y] && !newBoard[x][y].isRevealed) {
-      newBoard[x][y].isRevealed = true;
+    const cellIndex = getCellIndexByXAndY({ x, y, rows });
+    if (updatedCells[cellIndex] && !updatedCells[cellIndex].isRevealed) {
+      updatedCells[cellIndex].isRevealed = true;
 
       // if the cell has no adjacent mine, keep traversing
-      if (newBoard[x][y].value === 0) {
+      if (updatedCells[cellIndex].value === 0) {
         for (let i = -1; i <= 1; i++) {
           for (let j = -1; j <= 1; j++) {
-            if (!(i === 0 && j === 0) && newBoard[x + i] && newBoard[x + i][y + j]) {
+            if (
+              !(i === 0 && j === 0) &&
+              x + i >= 0 &&
+              x + i < rows &&
+              y + j >= 0 &&
+              y + j < cols &&
+              updatedCells[getCellIndexByXAndY({ x: x + i, y: y + j, rows })]
+            ) {
               reveal(x + i, y + j);
             }
           }
@@ -30,9 +42,9 @@ function revealCells({ board, click } = {}) {
     }
   };
 
-  reveal(click[0], click[1]);
+  reveal(targetCell[0], targetCell[1]);
 
-  return [newBoard, gameResult];
+  return [updatedCells, gameResult];
 }
 
 export default revealCells;

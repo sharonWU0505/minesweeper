@@ -3,7 +3,8 @@ import { Button } from "react95";
 
 const ICON_COLORS = {
   mine: "black",
-  flag: "red",
+  flag: "brown",
+  failure: "red",
 };
 
 // TODO: should support different levels
@@ -11,12 +12,12 @@ const _VALUE_COLORS = {
   0: "transparent",
   1: "blue",
   2: "green",
-  3: "red",
-  4: "purple",
+  3: "coral",
+  4: "blueviolet",
   5: "maroon",
-  6: "turquoise",
+  6: "cornflowerblue",
   7: "black",
-  8: "grey",
+  8: "dimgray",
 };
 
 const StyledCell = styled(Button)`

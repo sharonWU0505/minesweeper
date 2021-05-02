@@ -1,4 +1,4 @@
-import { DEFAULT_LEVEL } from "../utils";
+import { DEFAULT_LEVEL, getCellXAndYByIndex } from "../utils";
 
 const CELL = {
   x: 0,
@@ -12,16 +12,13 @@ const CELL = {
 /**
  * @param {Number} rows - number of rows
  * @param {Number} cols - number of columns
- * @returns {Array} A rows * cols size game board
+ * @returns {Array} an array of cells with rows * cols size representing a game
  */
 function createGame({ rows = DEFAULT_LEVEL.rows, cols = DEFAULT_LEVEL.cols } = {}) {
-  return new Array(rows).fill(0).map((_, x) =>
-    new Array(cols).fill(0).map((_, y) => ({
-      ...CELL,
-      x,
-      y,
-    }))
-  );
+  return new Array(rows * cols).fill(0).map((_, index) => {
+    const [x, y] = getCellXAndYByIndex({ index, rows });
+    return { ...CELL, x, y };
+  });
 }
 
 export default createGame;
