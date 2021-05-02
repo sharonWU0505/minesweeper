@@ -7,7 +7,7 @@ import { getCellIndexByXAndY, DEFAULT_LEVEL } from "../utils";
  * @returns {Array} [updated cells after revealing, game result]
  */
 function revealCells({ cells = [], targetCell = [], level = DEFAULT_LEVEL } = {}) {
-  const { rows } = level;
+  const { rows, cols } = level;
 
   if (cells[getCellIndexByXAndY({ x: targetCell[0], y: targetCell[1], rows })].isMine) {
     // game over
@@ -28,6 +28,10 @@ function revealCells({ cells = [], targetCell = [], level = DEFAULT_LEVEL } = {}
           for (let j = -1; j <= 1; j++) {
             if (
               !(i === 0 && j === 0) &&
+              x + i >= 0 &&
+              x + i < rows &&
+              y + j >= 0 &&
+              y + j < cols &&
               updatedCells[getCellIndexByXAndY({ x: x + i, y: y + j, rows })]
             ) {
               reveal(x + i, y + j);

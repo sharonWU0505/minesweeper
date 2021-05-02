@@ -4,7 +4,16 @@ import { StyledCell, ICON_COLORS } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
 
-function Cell({ value, isMine, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
+function Cell({
+  value,
+  isMine,
+  isRevealed,
+  isFlagged,
+  onClick,
+  onContextMenu,
+  gameEnded,
+  isFailedCell,
+}) {
   const displayValue = () => {
     return isFlagged ? (
       <FontAwesomeIcon icon={faFlag} color={ICON_COLORS.flag} />
@@ -16,7 +25,14 @@ function Cell({ value, isMine, isRevealed, isFlagged, onClick, onContextMenu, ga
   };
 
   const displayAnswer = () => {
-    return isMine ? <FontAwesomeIcon icon={faBomb} color={ICON_COLORS.mine} /> : value || "";
+    return isMine ? (
+      <FontAwesomeIcon
+        icon={faBomb}
+        color={isFailedCell ? ICON_COLORS.failure : ICON_COLORS.mine}
+      />
+    ) : (
+      value || ""
+    );
   };
 
   return (
@@ -39,6 +55,7 @@ Cell.propTypes = {
   onClick: PropTypes.func,
   onContextMenu: PropTypes.func,
   gameEnded: PropTypes.bool,
+  isFailedCell: PropTypes.bool,
 };
 
 export default Cell;

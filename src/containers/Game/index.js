@@ -6,6 +6,12 @@ import config from "../../config";
 
 const LEVEL = getGameLevel(config.level);
 
+const MESSAGES = {
+  success: "You win !!",
+  failure: "You lose QQ",
+  playing: "Click to play!",
+};
+
 function Game() {
   const { rows, cols, mines } = LEVEL;
 
@@ -17,8 +23,13 @@ function Game() {
 
   const [cells, setCells] = useState(createGame({ rows, cols }));
 
-  const handleGameResult = result => {
+  const [failedCell, setFailedCell] = useState({});
+
+  const handleGameResult = (result, x, y) => {
     if (result !== null) {
+      if (!result) {
+        setFailedCell({ x, y });
+      }
       setEnded(result);
     }
   };
@@ -43,7 +54,7 @@ function Game() {
             targetCell: [x, y],
             level: LEVEL,
           });
-          handleGameResult(gameResult);
+          handleGameResult(gameResult, x, y);
           return updatedCells;
         });
       }
@@ -62,7 +73,7 @@ function Game() {
           targetCell: [x, y],
           level: LEVEL,
         });
-        handleGameResult(gameResult);
+        handleGameResult(gameResult, x, y);
         return updatedCells;
       });
     }
@@ -104,7 +115,9 @@ function Game() {
           ]}
         />
         <StyledGameInfo>
-          <h2>{ended !== null ? (ended ? "You win!" : "You lose QQ") : "Click to play!"}</h2>
+          <h2>
+            {ended !== null ? (ended ? MESSAGES.success : MESSAGES.failure) : MESSAGES.playing}
+          </h2>
           <div>Mines: {mines}</div>
           <div>Flags: {getFlagsCount()}</div>
         </StyledGameInfo>
@@ -118,6 +131,7 @@ function Game() {
                 key={`cell_${idxCol}`}
                 {...cell}
                 gameEnded={ended !== null}
+                isFailedCell={failedCell.x === cell.x && failedCell.y === cell.y}
                 onClick={event => {
                   handleLeftClick(event, cell.x, cell.y);
                 }}
