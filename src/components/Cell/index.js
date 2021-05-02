@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { StyledCell, ICON_COLORS } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb, faFlag } from "@fortawesome/free-solid-svg-icons";
+
 function Cell({ value, isMine, isRevealed, isFlagged, onClick, onContextMenu, gameEnded }) {
   const displayValue = () => {
-    return isRevealed ? (
-      isFlagged ? (
-        <FontAwesomeIcon icon={faFlag} color={ICON_COLORS.flag} />
-      ) : (
-        value
-      )
+    return isFlagged ? (
+      <FontAwesomeIcon icon={faFlag} color={ICON_COLORS.flag} />
+    ) : isRevealed ? (
+      value
     ) : (
       ""
     );
@@ -25,6 +24,7 @@ function Cell({ value, isMine, isRevealed, isFlagged, onClick, onContextMenu, ga
       onClick={onClick}
       onContextMenu={onContextMenu}
       active={isRevealed || gameEnded}
+      disable={isRevealed || gameEnded}
       value={value}>
       {gameEnded ? displayAnswer() : displayValue()}
     </StyledCell>

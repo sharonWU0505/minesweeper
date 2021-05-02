@@ -1,48 +1,53 @@
 import React, { useState } from "react";
 import { Row, Cell, ActionBar } from "../../components";
 import { StyledGameInfo } from "./style";
-import { getGameLevel, createGame, initGame, revealCells } from "../../utils";
+import { getGameLevel, createGame, initializeGame, revealCells, setFlagOnCell } from "../../utils";
 import config from "../../config";
 
 const LEVEL = getGameLevel(config.level);
 
 function Game() {
+  const { rows, cols, mines } = LEVEL;
+
   // null for not ended; true for succeeded; false for failed
   const [ended, setEnded] = useState(null);
 
   // true for started; false for haven't started
   const [started, setStarted] = useState(false);
 
-  const [board, setBoard] = useState(createGame({ rows: LEVEL.rows, cols: LEVEL.cols }));
+  const [cells, setCells] = useState(createGame({ rows, cols }));
+
+  const handleGameResult = result => {
+    if (result !== null) {
+      setEnded(result);
+    }
+  };
 
   const handleLeftClick = (event, x, y) => {
     if (event.nativeEvent.which === 1) {
       if (!started) {
         setStarted(true);
-        setBoard(prevBoard => {
-          const [initBoard, _] = initGame({ board: prevBoard, firstClick: [x, y] });
-          return initBoard;
+        setCells(prevCells => {
+          const [updatedCells, _] = initializeGame({
+            cells: prevCells,
+            firstClick: [x, y],
+            level: LEVEL,
+          });
+
+          return updatedCells;
         });
       } else {
-        setBoard(prevBoard => {
-          const [newBoard, gameResult] = revealCells({ board: prevBoard, click: [x, y] });
-          if (gameResult !== null) setEnded(gameResult);
-          return newBoard;
+        setCells(prevCells => {
+          const [updatedCells, gameResult] = revealCells({
+            cells: prevCells,
+            targetCell: [x, y],
+            level: LEVEL,
+          });
+          handleGameResult(gameResult);
+          return updatedCells;
         });
       }
     }
-  };
-
-  const checkIfWins = newBoard => {
-    for (let i = 0; i < LEVEL.rows; i++) {
-      for (let j = 0; j < LEVEL.cols; j++) {
-        if (newBoard[i][j].isFlagged !== newBoard[i][j].isMine) {
-          return;
-        }
-      }
-    }
-
-    setEnded(true);
   };
 
   const handleRightClick = (event, x, y) => {
@@ -51,14 +56,14 @@ function Game() {
     if (!started) {
       alert("Left click any cell to start the game first!");
     } else {
-      setBoard(prevBoard => {
-        let newBoard = JSON.parse(JSON.stringify(prevBoard));
-        newBoard[x][y].isFlagged = !prevBoard[x][y].isFlagged;
-        newBoard[x][y].isRevealed = !prevBoard[x][y].isRevealed;
-
-        checkIfWins(newBoard);
-
-        return newBoard;
+      setCells(prevCells => {
+        const [updatedCells, gameResult] = setFlagOnCell({
+          cells: prevCells,
+          targetCell: [x, y],
+          level: LEVEL,
+        });
+        handleGameResult(gameResult);
+        return updatedCells;
       });
     }
   };
@@ -66,7 +71,7 @@ function Game() {
   const handleRestart = () => {
     setEnded(null);
     setStarted(false);
-    setBoard(createGame({ rows: LEVEL.rows, cols: LEVEL.cols }));
+    setCells(createGame({ rows, cols }));
   };
 
   const handleSolve = () => {
@@ -74,15 +79,19 @@ function Game() {
   };
 
   const getFlagsCount = () => {
-    let count = 0;
+    return cells.filter(cell => cell.isFlagged).length;
+  };
 
-    board.forEach(row => {
-      row.forEach(cell => {
-        if (cell.isFlagged) count++;
-      });
+  const groupCellsInRows = () => {
+    let cellRows = [];
+    cells.forEach((cell, index) => {
+      if (index % rows === 0) {
+        cellRows.push([cell]);
+      } else {
+        cellRows[cellRows.length - 1].push(cell);
+      }
     });
-
-    return count;
+    return cellRows;
   };
 
   return (
@@ -95,14 +104,14 @@ function Game() {
           ]}
         />
         <StyledGameInfo>
-          <h2>{ended !== null ? (ended ? "You win!" : "You lose QQ") : "Keep playing!"}</h2>
-          <div>Mines: {LEVEL.mines}</div>
+          <h2>{ended !== null ? (ended ? "You win!" : "You lose QQ") : "Click to play!"}</h2>
+          <div>Mines: {mines}</div>
           <div>Flags: {getFlagsCount()}</div>
         </StyledGameInfo>
       </div>
 
       <div>
-        {board.map((row, idxRol) => (
+        {groupCellsInRows(cells).map((row, idxRol) => (
           <Row key={`row_${idxRol}`}>
             {row.map((cell, idxCol) => (
               <Cell

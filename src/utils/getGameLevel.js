@@ -8,7 +8,7 @@ const DEFAULT_LEVEL = {
  * @param {String} level - level of game
  * @returns {Object} An object of level details
  */
-function getGameLevel(level = "easy") {
+function getGameLevel({ level = "easy" }) {
   switch (level) {
     case "easy":
     default:
