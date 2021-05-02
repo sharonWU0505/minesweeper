@@ -1,0 +1,28 @@
+name: CI
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        run: npm install
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: CI=false && npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.ACTIONS_DEPLOY_HUGO_TOKEN }}
+          external_repository: sharonWU0505/sharonWU0505.github.io
+          publish_dir: ./public/minesweeper
+          user_name: sharonWU0505
+          user_email: yasyuanwu@gmail.com
+          publish_branch: main
