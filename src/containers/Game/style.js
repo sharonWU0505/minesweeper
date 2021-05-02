@@ -4,4 +4,10 @@ const StyledGameInfo = styled.div`
   padding: 5px 7px;
 `;
 
-export { StyledGameInfo };
+const StyledRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export { StyledGameInfo, StyledRow };

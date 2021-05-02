@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Row, Cell, ActionBar } from "../../components";
-import { StyledGameInfo } from "./style";
+import { Cell, ActionBar } from "../../components";
+import { StyledGameInfo, StyledRow } from "./style";
 import { getGameLevel, createGame, initializeGame, revealCells, setFlagOnCell } from "../../utils";
 import config from "../../config";
 
@@ -109,7 +109,7 @@ function Game() {
   };
 
   return (
-    <main>
+    <main data-testid="game">
       <ActionBar
         buttons={[
           { text: "Restart", onClick: handleRestart },
@@ -124,7 +124,7 @@ function Game() {
 
       <div>
         {groupCellsInRows(cells).map((row, idxRol) => (
-          <Row key={`row_${idxRol}`}>
+          <StyledRow key={`row_${idxRol}`}>
             {row.map((cell, idxCol) => {
               const { x, y } = cell;
               return (
@@ -141,7 +141,7 @@ function Game() {
                   }}></Cell>
               );
             })}
-          </Row>
+          </StyledRow>
         ))}
       </div>
     </main>

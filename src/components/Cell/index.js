@@ -16,27 +16,29 @@ function Cell({
 }) {
   const displayValue = () => {
     return isFlagged ? (
-      <FontAwesomeIcon icon={faFlag} color={ICON_COLORS.flag} />
+      <FontAwesomeIcon data-testid="cell-flag" icon={faFlag} color={ICON_COLORS.flag} />
     ) : isRevealed ? (
-      value
+      <span data-testid="cell-value">{value}</span>
     ) : (
-      ""
+      <span data-testid="cell-hidden-value">{""}</span>
     );
   };
 
   const displayAnswer = () => {
     return isMine ? (
       <FontAwesomeIcon
+        data-testid="cell-mine"
         icon={faBomb}
         color={isFailedCell ? ICON_COLORS.failure : ICON_COLORS.mine}
       />
     ) : (
-      value || ""
+      <span data-testid="cell-solution">{value || ""}</span>
     );
   };
 
   return (
     <StyledCell
+      data-testid="cell"
       onClick={onClick}
       onContextMenu={onContextMenu}
       active={isRevealed || gameEnded}
@@ -48,14 +50,14 @@ function Cell({
 }
 
 Cell.propTypes = {
-  value: PropTypes.number,
-  isMine: PropTypes.bool,
-  isRevealed: PropTypes.bool,
-  isFlagged: PropTypes.bool,
-  onClick: PropTypes.func,
-  onContextMenu: PropTypes.func,
-  gameEnded: PropTypes.bool,
-  isFailedCell: PropTypes.bool,
+  value: PropTypes.number.isRequired,
+  isMine: PropTypes.bool.isRequired,
+  isRevealed: PropTypes.bool.isRequired,
+  isFlagged: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onContextMenu: PropTypes.func.isRequired,
+  gameEnded: PropTypes.bool.isRequired,
+  isFailedCell: PropTypes.bool.isRequired,
 };
 
 export default Cell;
