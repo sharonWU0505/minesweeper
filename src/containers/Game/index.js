@@ -21,8 +21,10 @@ function Game() {
   // true for started; false for haven't started
   const [started, setStarted] = useState(false);
 
+  // an array of cells representing the game
   const [cells, setCells] = useState(createGame({ rows, cols }));
 
+  // { x: x, y: y } of the cell clicked to cause failure
   const [failedCell, setFailedCell] = useState({});
 
   const handleGameResult = (result, x, y) => {
@@ -83,6 +85,7 @@ function Game() {
     setEnded(null);
     setStarted(false);
     setCells(createGame({ rows, cols }));
+    setFailedCell({});
   };
 
   const handleSolve = () => {
@@ -107,38 +110,37 @@ function Game() {
 
   return (
     <main>
-      <div>
-        <ActionBar
-          buttons={[
-            { text: "Restart", onClick: handleRestart },
-            { text: "Solve", onClick: handleSolve, disabled: !started },
-          ]}
-        />
-        <StyledGameInfo>
-          <h2>
-            {ended !== null ? (ended ? MESSAGES.success : MESSAGES.failure) : MESSAGES.playing}
-          </h2>
-          <div>Mines: {mines}</div>
-          <div>Flags: {getFlagsCount()}</div>
-        </StyledGameInfo>
-      </div>
+      <ActionBar
+        buttons={[
+          { text: "Restart", onClick: handleRestart },
+          { text: "Solve", onClick: handleSolve, disabled: !started },
+        ]}
+      />
+      <StyledGameInfo>
+        <h2>{ended !== null ? (ended ? MESSAGES.success : MESSAGES.failure) : MESSAGES.playing}</h2>
+        <div>Mines: {mines}</div>
+        <div>Flags: {getFlagsCount()}</div>
+      </StyledGameInfo>
 
       <div>
         {groupCellsInRows(cells).map((row, idxRol) => (
           <Row key={`row_${idxRol}`}>
-            {row.map((cell, idxCol) => (
-              <Cell
-                key={`cell_${idxCol}`}
-                {...cell}
-                gameEnded={ended !== null}
-                isFailedCell={failedCell.x === cell.x && failedCell.y === cell.y}
-                onClick={event => {
-                  handleLeftClick(event, cell.x, cell.y);
-                }}
-                onContextMenu={event => {
-                  handleRightClick(event, cell.x, cell.y);
-                }}></Cell>
-            ))}
+            {row.map((cell, idxCol) => {
+              const { x, y } = cell;
+              return (
+                <Cell
+                  key={`cell_${idxCol}`}
+                  {...cell}
+                  gameEnded={ended !== null}
+                  isFailedCell={failedCell.x === x && failedCell.y === y}
+                  onClick={event => {
+                    handleLeftClick(event, x, y);
+                  }}
+                  onContextMenu={event => {
+                    handleRightClick(event, x, y);
+                  }}></Cell>
+              );
+            })}
           </Row>
         ))}
       </div>
