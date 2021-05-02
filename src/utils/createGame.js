@@ -1,6 +1,6 @@
 import { DEFAULT_LEVEL, getCellXAndYByIndex } from "../utils";
 
-const CELL = {
+const DEFAULT_CELL = {
   x: 0,
   y: 0,
   value: 0,
@@ -17,8 +17,8 @@ const CELL = {
 function createGame({ rows = DEFAULT_LEVEL.rows, cols = DEFAULT_LEVEL.cols } = {}) {
   return new Array(rows * cols).fill(0).map((_, index) => {
     const [x, y] = getCellXAndYByIndex({ index, rows });
-    return { ...CELL, x, y };
+    return { ...DEFAULT_CELL, x, y };
   });
 }
 
-export default createGame;
+export { DEFAULT_CELL, createGame };

@@ -2,7 +2,7 @@ import { getCellXAndYByIndex } from "./getCellIndex";
 import { DEFAULT_LEVEL, getCellIndexByXAndY } from "./index";
 import revealCells from "./revealCells";
 
-function _createMines({ mines, maxIndex, firstClickIndex }) {
+function createMines({ mines, maxIndex, firstClickIndex }) {
   let indices = new Set();
 
   while (indices.size < mines) {
@@ -25,7 +25,7 @@ function initializeGame({ cells = [], firstClick = [], level = DEFAULT_LEVEL } =
 
   const { rows, cols, mines } = level;
 
-  const minesIndices = _createMines({
+  const minesIndices = createMines({
     mines,
     maxIndex: rows * cols,
     firstClickIndex: getCellIndexByXAndY({ x: firstClick[0], y: firstClick[1], rows }),
@@ -58,4 +58,4 @@ function initializeGame({ cells = [], firstClick = [], level = DEFAULT_LEVEL } =
   return revealCells({ cells: updatedCells, targetCell: firstClick, level });
 }
 
-export default initializeGame;
+export { createMines, initializeGame };
