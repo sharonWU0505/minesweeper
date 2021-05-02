@@ -12,7 +12,7 @@ The game has the following rules:
 ## Set Up at Local
 
 1. Make sure that `node` (`>= v.14.15.4`) and `npm` (`>= v6.14.10`) are installed
-   - Installing `node` and `npm` with [`nvm`](https://github.com/nvm-sh/nvm) is suggested.
+   - Installing `node` and `npm` by [`nvm`](https://github.com/nvm-sh/nvm) is suggested.
 2. Install packages: `npm install`
 3. Run the web app: `npm run start`
 4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -27,14 +27,14 @@ The game has the following rules:
 - `npm run build`
   - Builds the app for production to the `build` folder.
 
-## Project Explanation
+## Project Details
 
-> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> This project is bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 #### Packages Included
 
-- Packages provided by [Create React App](https://github.com/facebook/create-react-app#whats-included)
-- More packages installed
+- Provided by [Create React App](https://github.com/facebook/create-react-app#whats-included)
+- More installed
   - [`prop-types`](https://www.npmjs.com/package/prop-types) for validating React components' props
   - [`node-sass`](https://www.npmjs.com/package/node-sass) for transforming SCSS to CSS
   - [`react95`](https://www.npmjs.com/package/react95) for styling pages with Windows95 styles
@@ -57,7 +57,7 @@ minesweeper
 │   ├── components          // presentational components
 │   ├── containers          // container components
 │   ├── tests
-│   ├── utils               // utilities functions for actions on the game
+│   ├── utils               // utilities functions for getting updated data of the game
 │   ├── App.js              // the main container
 │   ├── config.js           // settings for creating a minesweeper
 │   ├── index.js            // the web app's JavaScript entry point
@@ -74,26 +74,26 @@ minesweeper
 
 ## Design Ideas
 
-> - `square` in the Google Doc is called `cell` here
+> `square` in the Google Doc is called `cell` here
 
 #### Basics
 
 Firstly, I build this minesweeper by [React](https://reactjs.org/). And the project is bootstrapped by [Create React App](https://github.com/facebook/create-react-app), which is a reliable and well-designed project template provided by Facebook.
 
-In the web app, I totally rely on React [Hooks](https://reactjs.org/docs/hooks-reference.html) to deal with states, because data flows and changes of state due to actions are quite simple in the game. I do not include any state management tool which may be more suitable for larges-scale and complicated websites.
+In the web app, I totally rely on React [Hooks](https://reactjs.org/docs/hooks-reference.html) to deal with states, because data flows and changes of state from operations are quite simple in the game. I do not include any state management tool that may be more suitable for larges-scale and complicated websites.
 
 Other than React, [`styled-components`](https://www.npmjs.com/package/styled-components) and [`react95`](https://www.npmjs.com/package/react95) are used for styling and displaying Windows-like pages.
 
-#### Components Explained
+#### Components Explanation
 
 ##### The `Game` Component
 
-Due to cases that data from multiple components should be collected to judge the game's status and child components should communicate with each other. I decide to maintain shared states in the `Game` component, such as
+Due to cases that data from multiple components should be collected to judge the game's status and child components should communicate with each other. I decide to maintain shared states in the `Game` component. Those are
 
 - whether the game is `started` or not
 - whether the game is `ended` or not
-- the `cells`: I use an array of object to abstract a minesweeper, since it's easier to realize immutability on 1D array compared to 2D array.
-- the `failedCell` causing the failure after clicking it
+- `cells`: I use an array of object to abstract a minesweeper, since it's easier to realize immutability on 1D array compared to 2D array.
+- a `failedCell` causing the failure after clicking it
 
 This keep child components in sync.
 
@@ -102,7 +102,7 @@ This keep child components in sync.
 > - All are presentational components
 
 - `ActionBar`: for rendering restart- and solve- buttons
-- `Row`: for rendering `Cell`s in rows
+- `Row`: for rendering cells in rows
 - `Cell`: for rendering a cell with different status, `value`, click events, etc. by `props` received
 
 ##### The Actions
@@ -111,15 +111,16 @@ This keep child components in sync.
 > - Those are triggered by events in `Game` component to get updated game data
 
 1. `createGame`
-   - to create an array of cells based on game level for the game
+   - to create an array of default cells based on the game level
 2. `initializeGame`
-   - will be triggered by `handleLeftClick` if it is the first click, because "the first click will never be a mine" is required
-   - randomly generate mines based on game level
+   - will be triggered by `handleLeftClick` if it is the first click
+   - The rule, the first click will never be a mine, is required, so mines and values of cells are set here.
+   - randomly generate mines based on the game level
    - update properties, `isMine` and `value`, for cells
 3. `revealCells`
    - will be triggered by `handleLeftClick`
    - will reveal the clicked cell
-   - will traverse and reveal cells if the clicked cell has no adjacent mines
+   - will traverse and reveal cells if the clicked one has no adjacent mines
 4. `setFlagOnCell`
    - will be triggered by `handleRightClick`
-   - update `isFlagged` on the clicked cell and check it the game finished
+   - update `isFlagged` on the clicked cell and check if the game finished
