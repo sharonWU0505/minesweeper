@@ -17,10 +17,13 @@ jobs:
         run: npm run test
 
       - name: Build
-        run:
-          - npm run build
-          - mkdir -p public/minesweeper
-          - mv build public/minesweeper
+        run: npm run build
+
+      - name: Create folder
+        run: mkdir -p public/minesweeper
+
+      - name: Move build output
+        run: mv build public/minesweeper
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
