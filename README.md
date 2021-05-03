@@ -1,6 +1,6 @@
 # Minesweeper
 
-> Preview Page: https://sharonwu0505.github.io/minesweeper/
+> Preview Page: https://sharonwu0505.github.io/minesweeper/ (**Only PC version is supported**)
 
 The game has the following rules:
 
