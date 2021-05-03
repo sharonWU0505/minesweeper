@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/minesweeper/static/css/main.68e027bc.chunk.css",
+    "main.js": "/minesweeper/static/js/main.bf2a6432.chunk.js",
+    "main.js.map": "/minesweeper/static/js/main.bf2a6432.chunk.js.map",
+    "runtime-main.js": "/minesweeper/static/js/runtime-main.b29371ec.js",
+    "runtime-main.js.map": "/minesweeper/static/js/runtime-main.b29371ec.js.map",
+    "static/js/2.01011341.chunk.js": "/minesweeper/static/js/2.01011341.chunk.js",
+    "static/js/2.01011341.chunk.js.map": "/minesweeper/static/js/2.01011341.chunk.js.map",
+    "static/js/3.a7546d4a.chunk.js": "/minesweeper/static/js/3.a7546d4a.chunk.js",
+    "static/js/3.a7546d4a.chunk.js.map": "/minesweeper/static/js/3.a7546d4a.chunk.js.map",
+    "index.html": "/minesweeper/index.html",
+    "static/css/main.68e027bc.chunk.css.map": "/minesweeper/static/css/main.68e027bc.chunk.css.map",
+    "static/js/2.01011341.chunk.js.LICENSE.txt": "/minesweeper/static/js/2.01011341.chunk.js.LICENSE.txt",
+    "static/media/ms_sans_serif.woff2": "/minesweeper/static/media/ms_sans_serif.0348082a.woff2",
+    "static/media/ms_sans_serif_bold.woff2": "/minesweeper/static/media/ms_sans_serif_bold.7fcf57cc.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b29371ec.js",
+    "static/js/2.01011341.chunk.js",
+    "static/css/main.68e027bc.chunk.css",
+    "static/js/main.bf2a6432.chunk.js"
+  ]
+}
