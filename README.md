@@ -1,5 +1,7 @@
 # Minesweeper
 
+> Preview Page: https://sharonwu0505.github.io/minesweeper/
+
 The game has the following rules:
 
 - [x] Clicking a mine ends the game.
