@@ -24,7 +24,7 @@ jobs:
         with:
           personal_token: ${{ secrets.ACTIONS_DEPLOY_MINESWEEPER_TOKEN }}
           # external_repository: sharonWU0505/sharonWU0505.github.io
-          publish_dir: ./build
+          publish_dir: build
           user_name: sharonWU0505
           user_email: yasyuanwu@gmail.com
           publish_branch: main
