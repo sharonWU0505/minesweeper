@@ -69,8 +69,8 @@ minesweeper
 │   ├── index.js            // the web app's JavaScript entry point
 │   ├── reportWebVitals.js
 │   └── setupTests.js
-├── .env
-├── .env.local
+├── .env.development
+├── .env.production
 ├── .eslintrc
 ├── .gitignore
 ├── .prettierrc
