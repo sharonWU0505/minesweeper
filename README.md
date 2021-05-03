@@ -70,6 +70,7 @@ minesweeper
 │   ├── reportWebVitals.js
 │   └── setupTests.js
 ├── .env
+├── .env.local
 ├── .eslintrc
 ├── .gitignore
 ├── .prettierrc
