@@ -27,4 +27,4 @@ jobs:
           publish_dir: build
           user_name: sharonWU0505
           user_email: yasyuanwu@gmail.com
-          publish_branch: main
+          publish_branch: deploy
