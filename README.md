@@ -19,9 +19,11 @@ The game has the following rules:
 
 1. Make sure that `node` (`>= v.14.15.4`) and `npm` (`>= v6.14.10`) are installed
    - Installing `node` and `npm` by [`nvm`](https://github.com/nvm-sh/nvm) is suggested.
-2. Install packages: `npm install`
-3. Run the web app: `npm run start`
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Clone the repository: `git clone https://github.com/sharonWU0505/minesweeper.git`
+3. Stay on the `main` branch
+4. Install packages: `npm install`
+5. Run the web app: `npm run start`
+6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Available Scripts
 
