@@ -68,6 +68,8 @@ function Game() {
 
     if (!started) {
       alert("Left click any cell to start the game first!");
+    } else if (ended) {
+      alert("The game is ended!");
     } else {
       setCells(prevCells => {
         const [updatedCells, gameResult] = setFlagOnCell({
